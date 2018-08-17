@@ -9,6 +9,7 @@ const Lightbox = (($) => {
 		maxWidth: 9999,
 		maxHeight: 9999,
 		showArrows: true, //display the left / right arrows or not
+		swipeGesture: true, //if true, enable swipe events
 		wrapping: true, //if true, gallery loops infinitely
 		type: null, //force the lightbox into image / youtube mode. if null, or not image|youtube|vimeo; detect it
 		alwaysShowClose: false, //always show the close button, even if there is no title
@@ -146,15 +147,18 @@ const Lightbox = (($) => {
 			$(window).on('resize.ekkoLightbox', () => {
 				this._resize(this._wantedWidth, this._wantedHeight)
 			})
-			this._$lightboxContainer
-			.on('touchstart', () => {
-				this._touchstartX = event.changedTouches[0].screenX;
+			
+			if(this._config.swipeGesture) {
+				this._$lightboxContainer
+				.on('touchstart', () => {
+					this._touchstartX = event.changedTouches[0].screenX;
 
-			})
-			.on('touchend', () => {
-				this._touchendX = event.changedTouches[0].screenX;
-			    this._swipeGesure();
-			})
+				})
+				.on('touchend', () => {
+					this._touchendX = event.changedTouches[0].screenX;
+					this._swipeGesture();
+				})
+			}
 		}
 
 		element() {
@@ -594,7 +598,7 @@ const Lightbox = (($) => {
 			return img;
 		}
 
-		_swipeGesure() {
+		_swipeGesture() {
 		    if (this._touchendX < this._touchstartX) {
 		        return this.navigateRight();
 		    }
