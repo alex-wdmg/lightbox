@@ -40,7 +40,8 @@ var Lightbox = (function ($) {
 		onHide: function onHide() {},
 		onHidden: function onHidden() {},
 		onNavigate: function onNavigate() {},
-		onContentLoaded: function onContentLoaded() {}
+		onContentLoaded: function onContentLoaded() {},
+		updateGallery: function updateGallery() {}
 	};
 
 	var Lightbox = (function () {
@@ -212,6 +213,18 @@ var Lightbox = (function ($) {
 			close: {
 				value: function close() {
 					return this._$modal.modal("hide");
+				}
+			},
+            updateGallery: {
+
+                // update lightbox gallery items
+
+                value: function updateGallery() {
+                    this._galleryName = this._$element.data("gallery");
+                    if (this._galleryName) {
+                        this._$galleryItems = $(document.body).find("*[data-gallery=\"" + this._galleryName + "\"]");
+                        this.updateNavigation();
+                    }
 				}
 			},
 			_navigationalBinder: {

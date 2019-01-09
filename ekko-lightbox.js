@@ -27,7 +27,8 @@ const Lightbox = (($) => {
 		onHide() {},
 		onHidden() {},
 		onNavigate() {},
-		onContentLoaded() {}
+		onContentLoaded() {},
+		updateGallery() {}
 	}
 
 	class Lightbox {
@@ -241,6 +242,15 @@ const Lightbox = (($) => {
 
 		close() {
 			return this._$modal.modal('hide');
+		}
+
+		// update lightbox gallery items
+		updateGallery() {
+			this._galleryName = this._$element.data('gallery')
+			if (this._galleryName) {
+				this._$galleryItems = $(document.body).find(`*[data-gallery="${this._galleryName}"]`)
+                this.updateNavigation()
+			}
 		}
 
 		// helper private methods
