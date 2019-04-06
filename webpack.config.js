@@ -17,14 +17,18 @@ function getHotCSS(bundle, devMode) {
 
 const prod = {
     mode: devMode ? 'development' : 'production',
-    devtool: devMode ? 'cheap-module-source-map' : 'source-map',
+    devtool: devMode ? 'cheap-module-eval-source-map' : 'source-map',
     entry: [
         './ekko-lightbox.js',
         './ekko-lightbox.less'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: devMode ? '[name].js' : 'ekko-lightbox.js'
+        filename: devMode ? '[name].js' : 'ekko-lightbox.js',
+        libraryTarget: 'amd'
+    },
+    optimization: {
+        minimize: false,
     },
     module: {
         rules: [{
